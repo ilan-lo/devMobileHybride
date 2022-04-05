@@ -1,6 +1,8 @@
 let indice = 0;
 let i = 0;
-
+while (localStorage.getItem("objet"+i) != null) {
+    i++;
+}
 
 class Savoir{
     constructor(savoir, auteur, date){
