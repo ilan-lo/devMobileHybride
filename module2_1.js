@@ -117,27 +117,27 @@ while (localStorage.getItem("objet"+i)!=null) {
     nouv.ajouterDansleLocal();
 }
 
-    function addlist() {
-        let auteur = document.getElementById("auteur").value;
-        let savoir = document.getElementById("savoir").value;
-        let date = document.getElementById("date").value;
-        if(auteur === "" || savoir === "" || auteur === "auteur"|| savoir === "savoir"|| date === ""){
+function addlist() {
+    let auteur = document.getElementById("auteur").value;
+    let savoir = document.getElementById("savoir").value;
+    let date = document.getElementById("date").value;
+    if(auteur === "" || savoir === "" || auteur === "auteur"|| savoir === "savoir"|| date === ""){
 
-        } else {
-            let nouv = new Savoir(savoir, auteur, date);
-            nouv.ajouterDansleDom();
-            allSavoir.push(nouv);
-            nouv.ajouterDansleLocal();
-        }
-
+    } else {
+        let nouv = new Savoir(savoir, auteur, date);
+        nouv.ajouterDansleDom();
+        allSavoir.push(nouv);
+        nouv.ajouterDansleLocal();
     }
-    function deleter(id,i) {
-        console.log("rendu"+id);
-        document.getElementById("rendu"+id).remove();
-        document.getElementById("bu"+id).remove();
-        let objetLu = localStorage.removeItem("objet"+i);
-        allSavoir.splice(id, 1);
-        console.log(allSavoir);
 
-    }
+}
+function deleter(id,i) {
+    console.log("rendu"+id);
+    document.getElementById("rendu"+id).remove();
+    document.getElementById("bu"+id).remove();
+    let objetLu = localStorage.removeItem("objet"+i);
+    allSavoir.splice(id, 1);
+    console.log(allSavoir);
+
+}
 
