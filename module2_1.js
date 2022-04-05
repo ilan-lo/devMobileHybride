@@ -1,9 +1,48 @@
 let indice = 0;
 let i = 0;
-while (localStorage.getItem("objet"+i) != null) {
-    i++;
-}
+function chargerContenu() {
+    console.log("coucou, la fonction chargerContenu() est exécutée");
 
+    document.title = "Mon titre sur l'onglet";
+
+
+    //document.getElementsByTagName("h1")[0].innerText = "Ceci est mon vrai titre";
+    document.getElementById("titre").innerText = "Ceci est vraiment le bon titre";
+
+    let elInput = document.createElement("input");
+    let attValue = document.createAttribute("value");
+    attValue.value = "une zone de saisie";
+    elInput.setAttributeNode(attValue);
+    elInput.setAttribute("value", "auteur");
+    elInput.setAttribute("id", "auteur");
+
+    let elInput2 = document.createElement("input");
+    let attValue2 = document.createAttribute("value");
+    attValue2.value = "une zone de saisie";
+    elInput2.setAttributeNode(attValue2);
+    elInput2.setAttribute("value", "savoir");
+    elInput2.setAttribute("id", "savoir");
+
+    let elInput3 = document.createElement("input");
+    let attValue3 = document.createAttribute("value");
+    elInput3.setAttributeNode(attValue3);
+    elInput3.setAttribute("value", "04/04/22");
+    elInput3.setAttribute("id", "date");
+
+    let elbutton = document.createElement("button");
+    let attValueB = document.createAttribute("innerHTML");
+    attValueB.value = "Ajouter";
+    elbutton.setAttributeNode(attValueB);
+    elbutton.innerHTML = "Ajouter";
+    elbutton.setAttribute("onclick", "addlist();");
+
+
+    //afterend, beforebegin, afterbegin, beforerend
+    document.getElementById("titre").insertAdjacentElement("afterend", elInput);
+    document.getElementById("titre").insertAdjacentElement("afterend", elInput2);
+    document.getElementById("titre").insertAdjacentElement("afterend", elInput3);
+    document.getElementById("titre").insertAdjacentElement("afterend", elbutton);
+}
 class Savoir{
     constructor(savoir, auteur, date){
         this.savoir = savoir;
@@ -28,7 +67,8 @@ class Savoir{
             let elbuttondelete = document.createElement("button");
             elbuttondelete.innerHTML = "Suprimer";
             elbuttondelete.setAttribute("id", "bu" + indice);
-            elbuttondelete.setAttribute("onclick", "deleter(" + id + ");");
+            elbuttondelete.setAttribute("class", "local" + i);
+            elbuttondelete.setAttribute("onclick", "deleter(" + id + ',' +i + ");");
 
             //on rajoute le contenue
             elrendu.innerHTML = this.savoir + "<br>" + " de : " + this.auteur + "<br>" + " le : " + this.date;
@@ -39,18 +79,33 @@ class Savoir{
         }
     }
     ajouterDansleLocal() {
-        let auteur = document.getElementById("auteur").value;
-        let savoir = document.getElementById("savoir").value;
-        let dates = document.getElementById("date").value;
+        let auteur = this.auteur;
+        let savoir = this.savoir;
+        let dates = this.date;
         let objet = {auteur: `${auteur}`,savoir: `${savoir}`, date: `${dates}`};
-        localStorage.setItem("objet"+i++,JSON.stringify(objet));
-        let objetLu = localStorage.getItem("objet");
+        localStorage.setItem("objet"+i,JSON.stringify(objet));
+        let objetLu = localStorage.getItem("objet"+i++);
         let objetobjetLu = JSON.parse(objetLu);
         console.log(objetobjetLu);
     }
 }
 
 let allSavoir =[];
+//on rajoute celle qu'on connais deja
+while (localStorage.getItem("objet"+i) != null || i < 100) {
+    if(localStorage.getItem("objet"+i) != null) {
+        let objetLu = localStorage.getItem("objet" + i);
+        let objetobjetLu = JSON.parse(objetLu);
+        console.log(objetobjetLu);
+        let nouv = new Savoir(objetobjetLu.savoir, objetobjetLu.auteur, objetobjetLu.date);
+        nouv.ajouterDansleDom();
+        allSavoir.push(nouv);
+        nouv.ajouterDansleLocal();
+        console.log(allSavoir);
+    }else i++;
+}
+
+
 while (localStorage.getItem("objet"+i)!=null) {
     i++;
     let nouv1 = localStorage.getItem("objet"+i);
@@ -61,49 +116,6 @@ while (localStorage.getItem("objet"+i)!=null) {
     allSavoir.push(nouv);
     nouv.ajouterDansleLocal();
 }
-    function chargerContenu() {
-        console.log("coucou, la fonction chargerContenu() est exécutée");
-
-        document.title = "Mon titre sur l'onglet";
-
-
-        //document.getElementsByTagName("h1")[0].innerText = "Ceci est mon vrai titre";
-        document.getElementById("titre").innerText = "Ceci est vraiment le bon titre";
-
-        let elInput = document.createElement("input");
-        let attValue = document.createAttribute("value");
-        attValue.value = "une zone de saisie";
-        elInput.setAttributeNode(attValue);
-        elInput.setAttribute("value", "auteur");
-        elInput.setAttribute("id", "auteur");
-
-        let elInput2 = document.createElement("input");
-        let attValue2 = document.createAttribute("value");
-        attValue2.value = "une zone de saisie";
-        elInput2.setAttributeNode(attValue2);
-        elInput2.setAttribute("value", "savoir");
-        elInput2.setAttribute("id", "savoir");
-
-        let elInput3 = document.createElement("input");
-        let attValue3 = document.createAttribute("value");
-        elInput3.setAttributeNode(attValue3);
-        elInput3.setAttribute("value", "04/04/22");
-        elInput3.setAttribute("id", "date");
-
-        let elbutton = document.createElement("button");
-        let attValueB = document.createAttribute("innerHTML");
-        attValueB.value = "Ajouter";
-        elbutton.setAttributeNode(attValueB);
-        elbutton.innerHTML = "Ajouter";
-        elbutton.setAttribute("onclick", "addlist();");
-
-
-        //afterend, beforebegin, afterbegin, beforerend
-        document.getElementById("titre").insertAdjacentElement("afterend", elInput);
-        document.getElementById("titre").insertAdjacentElement("afterend", elInput2);
-        document.getElementById("titre").insertAdjacentElement("afterend", elInput3);
-        document.getElementById("titre").insertAdjacentElement("afterend", elbutton);
-    }
 
     function addlist() {
         let auteur = document.getElementById("auteur").value;
@@ -119,9 +131,13 @@ while (localStorage.getItem("objet"+i)!=null) {
         }
 
     }
-    function deleter(id) {
+    function deleter(id,i) {
         console.log("rendu"+id);
         document.getElementById("rendu"+id).remove();
         document.getElementById("bu"+id).remove();
+        let objetLu = localStorage.removeItem("objet"+i);
+        allSavoir.splice(id, 1);
+        console.log(allSavoir);
+
     }
 
