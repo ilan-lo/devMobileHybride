@@ -132,6 +132,13 @@ function compareValues(key, order = 'asc') {
         );
     };
 }
+function trie() {
+    document.getElementById("liste").innerHTML="";
+    allSavoir.forEach( savoir => {
+        savoir.ajouterDansleDom();
+        }
+    );
+}
 allSavoir.sort(compareValues('date'));
 console.log(allSavoir);
 
