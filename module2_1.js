@@ -92,20 +92,23 @@ class Savoir{
 let j = 0;
 let allSavoir =[];
 //on rajoute celle qu'on connais deja
-while (localStorage.getItem("objet"+i) != null || i < 100) {
-    if(localStorage.getItem("objet"+i) != null) {
-        let objetLu = localStorage.getItem("objet" + i);
-        let objetobjetLu = JSON.parse(objetLu);
-        console.log(objetobjetLu);
-        let nouv = new Savoir(objetobjetLu.savoir, objetobjetLu.auteur, objetobjetLu.date);
-        nouv.ajouterDansleDom();
-        allSavoir.push(nouv);
-        nouv.ajouterDansleLocal();
-        console.log(allSavoir);
-        j = i;
-    }else i++;
+function locall() {
+    while (localStorage.getItem("objet" + i) != null || i < 100) {
+        if (localStorage.getItem("objet" + i) != null) {
+            let objetLu = localStorage.getItem("objet" + i);
+            let objetobjetLu = JSON.parse(objetLu);
+            console.log(objetobjetLu);
+            let nouv = new Savoir(objetobjetLu.savoir, objetobjetLu.auteur, objetobjetLu.date);
+            nouv.ajouterDansleDom();
+            allSavoir.push(nouv);
+            nouv.ajouterDansleLocal();
+            console.log(allSavoir);
+            j = i;
+        } else i++;
+    }
+    i = j;
 }
-i=j;
+locall();
 
 
 //trie
@@ -167,13 +170,21 @@ function addlist() {
     }
 
 }
-function deleter(id,i) {
+function deleter(id,k) {
+    i = k;
     console.log("rendu"+id);
     document.getElementById("rendu"+id).remove();
     document.getElementById("bu"+id).remove();
-    let objetLu = localStorage.removeItem("objet"+i);
+    localStorage.removeItem("objet"+i);
     allSavoir.splice(id, 1);
     console.log(allSavoir);
+    while (localStorage.getItem("objet" + i) != null || i < 100) {
+        if (localStorage.getItem("objet" + i) != null) {
+            i++;
+            j = i;
+        } else i++;
+    }
+    i = j;
 
 }
 
