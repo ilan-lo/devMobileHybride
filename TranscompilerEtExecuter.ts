@@ -73,5 +73,51 @@ function bonjour( qui:string ){
         return joueur1;
     }
     console.log("le vainqueur est " + jouerAuBadminton("Brivael", "wayan"));
+
+
+    // ############ Les generiques
+
+    //un tableau typé
+    let tableauType: number[] = [1,2,3];
+
+    // ajouteur un elt
+    tableauType.push(4);
+    console.log(tableauType);
+
+    // tableau generique
+    let tableauGenerique: Array<number> = [9,8,7];
+    tableauGenerique.push(6);
+    console.log(tableauGenerique);
+    // tableau generique 2
+    let tableauGenerique2: Array<number|string> = ["9",8,"7"];
+    tableauGenerique2.push(6);
+    console.log(tableauGenerique2);
+
+    // classe generique:
+    class Viande{
+        constructor(public type: string) {
+        }
+    }
+    class Legume{
+        constructor(public type: string) {
+        }
+    }
+    class Poulet extends Viande{};
+    class Boeuf extends Viande{};
+    class Carotte extends Legume{};
+    class Poireau extends Legume{};
+    // class generique
+    class Sandwich<V extends Viande, L extends Legume>{
+        constructor(public viande: V, public legume: L) {
+        }
+        public afficher(): void {
+            console.log("Sandwich" + this.viande.type + "/" + this.legume.type);
+        }
+    }
+    let sandwichpouletcarotte: Sandwich<Poulet, Carotte> = new Sandwich<Poulet, Carotte>(new Poulet("fermier"), new Boeuf("en argent"));
+    console.log(sandwichpouletcarotte);
+
+
+
 }
 bonjour("Kevin");

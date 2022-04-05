@@ -84,9 +84,81 @@ function bonjour(qui) {
     var vainqueur = sportJouable.jouer("Batman", "Superman");
     console.log(vainqueur);
     var jouerAuBadminton = function (joueur1, joueur2) {
-        console.log(joueur1 + " et " + joueur2 + "jouent au bad");
+        console.log(joueur1 + " et " + joueur2 + " jouent au bad");
         return joueur1;
     };
     console.log("le vainqueur est " + jouerAuBadminton("Brivael", "wayan"));
+    // ############ Les generiques
+    //un tableau typé
+    var tableauType = [1, 2, 3];
+    // ajouteur un elt
+    tableauType.push(4);
+    console.log(tableauType);
+    // tableau generique
+    var tableauGenerique = [9, 8, 7];
+    tableauGenerique.push(6);
+    console.log(tableauGenerique);
+    // tableau generique 2
+    var tableauGenerique2 = ["9", 8, "7"];
+    tableauGenerique2.push(6);
+    console.log(tableauGenerique2);
+    // classe generique:
+    var Viande = /** @class */ (function () {
+        function Viande(type) {
+            this.type = type;
+        }
+        return Viande;
+    }());
+    var Legume = /** @class */ (function () {
+        function Legume(type) {
+            this.type = type;
+        }
+        return Legume;
+    }());
+    var Poulet = /** @class */ (function (_super) {
+        __extends(Poulet, _super);
+        function Poulet() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return Poulet;
+    }(Viande));
+    ;
+    var Boeuf = /** @class */ (function (_super) {
+        __extends(Boeuf, _super);
+        function Boeuf() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return Boeuf;
+    }(Viande));
+    ;
+    var Carotte = /** @class */ (function (_super) {
+        __extends(Carotte, _super);
+        function Carotte() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return Carotte;
+    }(Legume));
+    ;
+    var Poireau = /** @class */ (function (_super) {
+        __extends(Poireau, _super);
+        function Poireau() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return Poireau;
+    }(Legume));
+    ;
+    // class generique
+    var Sandwich = /** @class */ (function () {
+        function Sandwich(viande, legume) {
+            this.viande = viande;
+            this.legume = legume;
+        }
+        Sandwich.prototype.afficher = function () {
+            console.log("Sandwich" + this.viande.type + "/" + this.legume.type);
+        };
+        return Sandwich;
+    }());
+    var sandwichpouletcarotte = new Sandwich(new Poulet("fermier"), new Boeuf("en argent"));
+    console.log(sandwichpouletcarotte);
 }
 bonjour("Kevin");
