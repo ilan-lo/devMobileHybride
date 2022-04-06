@@ -1,7 +1,7 @@
 module TP {
     // ...
 
-    
+
     export class Auteur{
         constructor(public nom: string, public prenom: string) {
         }
